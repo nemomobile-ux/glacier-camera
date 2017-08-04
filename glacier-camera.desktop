@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Camera
+Exec=glacier-camera
+Icon=icon-launcher-camera
+X-Desktop-File-Install-Version=0.20

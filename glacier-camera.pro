@@ -22,4 +22,5 @@ DISTFILES += \
     rpm/glacier-camera.spec \
     qml/components.qml \
     qml/glacier-camera.qml \
-    qml/components/ClickIcon.qml
+    qml/components/ClickIcon.qml \
+    qml/pages/CameraPage.qml

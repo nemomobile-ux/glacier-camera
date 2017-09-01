@@ -18,7 +18,7 @@ Page {
         tools: [
             ToolButton {
                 iconSource: "/usr/share/glacier-camera/images/gear.svg"
-                onClicked:{
+                onClicked: {
                     pageStack.push(Qt.resolvedUrl("/usr/share/glacier-camera/qml/pages/SettingsPage.qml"));
                 }
             }
@@ -45,8 +45,7 @@ Page {
         }
 
         onLockStatusChanged: {
-            if(lockStatus == Camera.Locked)
-            {
+            if(lockStatus == Camera.Locked) {
                 fileName = "/home/nemo/Pictures/camera_"+Qt.formatDateTime(new Date(),"yyMMdd_hhmmss")+".jpg";
                 camera.imageCapture.captureToLocation(fileName)
             }
@@ -55,6 +54,14 @@ Page {
         focus {
             focusMode: Camera.FocusAuto
             focusPointMode: Camera.FocusPointCustom
+        }
+
+        Component.onCompleted: {
+            if(root.iso === "auto") {
+                exposure.setAutoIsoSensitivity()
+            } else {
+                exposure.manualIso = root.iso;
+            }
         }
     }
 
@@ -164,13 +171,9 @@ Page {
 
         onClicked: {
             camera.stop();
-            if(cameraId+1 == QtMultimedia.availableCameras.length)
-            {
+            if(cameraId+1 == QtMultimedia.availableCameras.length) {
                 cameraId = 0;
-
-            }
-            else
-            {
+            } else {
                 cameraId++;
             }
             camera.start();
@@ -182,7 +185,7 @@ Page {
         width: cameraPage.height/10
         height: width
         source: "/usr/share/glacier-camera/images/camera.svg"
-        anchors{
+        anchors {
             bottom: parent.bottom
             bottomMargin: width/2
             horizontalCenter: parent.horizontalCenter
@@ -203,8 +206,7 @@ Page {
         visible: false
 
         onVisibleChanged: {
-            if(visible === true)
-            {
+            if(visible === true) {
                 opacity = 1
                 focusAnimation.start()
             }
@@ -212,13 +214,13 @@ Page {
     }
     SequentialAnimation {
         id: focusAnimation
-        NumberAnimation{
+        NumberAnimation {
             target: focusPoint
             property: "opacity"
             duration: 500
             to: 0
         }
-        PropertyAction{
+        PropertyAction {
             target: focusPoint
             property: "visible"
             value: false

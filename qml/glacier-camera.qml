@@ -16,7 +16,7 @@ ApplicationWindow {
     property int cameraId: 0
     property string fileName: ""
 
-    //contentOrientation: Screen.orientation
+    property var iso;
 
     Settings{
         id: settings;
@@ -44,5 +44,6 @@ ApplicationWindow {
     Component.onCompleted: {
         cameraId = settings.value("cameraId",0)
         fileName = settings.value("lastFile","")
+        iso = settings.value("iso","auto");
     }
 }

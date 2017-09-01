@@ -43,6 +43,11 @@ Page {
                 camera.imageCapture.captureToLocation(fileName)
             }
         }
+
+        focus {
+            focusMode: Camera.FocusAuto
+            focusPointMode: Camera.FocusPointCustom
+        }
     }
 
     Rectangle{
@@ -87,6 +92,18 @@ Page {
                 camera.setDigitalZoom(zoomValue)
             }
             zoomLabel.visible = false
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                var point_x = mouse.x / Screen.width
+                var point_y = mouse.y / Screen.height
+                camera.focus.customFocusPoint = Qt.point(point_x, point_y)
+                focusPoint.x = mouse.x-focusPoint.radius
+                focusPoint.y = mouse.y-focusPoint.radius
+                focusPoint.visible = true;
+            }
         }
     }
 
@@ -164,6 +181,39 @@ Page {
         }
         onClicked: {
             camera.searchAndLock();
+        }
+    }
+
+    Rectangle{
+        id: focusPoint
+        width: getShot.width/3
+        height: width
+
+        radius: width/2
+
+        color: "#0091e5"
+        visible: false
+
+        onVisibleChanged: {
+            if(visible === true)
+            {
+                opacity = 1
+                focusAnimation.start()
+            }
+        }
+    }
+    SequentialAnimation {
+        id: focusAnimation
+        NumberAnimation{
+            target: focusPoint
+            property: "opacity"
+            duration: 500
+            to: 0
+        }
+        PropertyAction{
+            target: focusPoint
+            property: "visible"
+            value: false
         }
     }
 }

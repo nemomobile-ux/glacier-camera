@@ -6,6 +6,8 @@ import QtQuick.Controls.Styles.Nemo 1.0
 import QtQuick.Window 2.1
 import QtQuick.Layouts 1.0
 
+import org.glacier.settings 1.0
+
 import "pages"
 
 ApplicationWindow {
@@ -15,6 +17,10 @@ ApplicationWindow {
     property string fileName: ""
 
     //contentOrientation: Screen.orientation
+
+    Settings{
+        id: settings;
+    }
 
     Keys.onReleased: {
         if (event.key === Qt.Key_Back) {
@@ -26,4 +32,17 @@ ApplicationWindow {
     }
 
     initialPage: CameraPage{}
+
+    onFileNameChanged: {
+        settings.setValue("lastFile",fileName);
+    }
+
+    onCameraIdChanged: {
+        settings.setValue("cameraId",cameraId);
+    }
+
+    Component.onCompleted: {
+        cameraId = settings.value("cameraId",0)
+        fileName = settings.value("lastFile","")
+    }
 }

@@ -15,6 +15,14 @@ Page {
     headerTools: HeaderToolsLayout {
         id: tools
         title: qsTr("Camera")
+        tools: [
+            ToolButton {
+                iconSource: "/usr/share/glacier-camera/images/gear.svg"
+                onClicked:{
+                    pageStack.push(Qt.resolvedUrl("/usr/share/glacier-camera/qml/pages/SettingsPage.qml"));
+                }
+            }
+        ]
     }
 
     Camera {
@@ -119,7 +127,7 @@ Page {
 
     Image{
         id: lastPhoto
-        source: ""
+        source: settings.value("lastFile","")
         width: getShot.width/3*2
         height: width
 

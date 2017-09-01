@@ -1,3 +1,8 @@
+%{!?qtc_qmake:%define qtc_qmake %qmake}
+%{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
+%{!?qtc_make:%define qtc_make make}
+%{?qtc_builddir:%define _builddir %qtc_builddir}
+
 Name:       glacier-camera
 Summary:    Glacier Camera
 Version:    0.1
@@ -19,7 +24,7 @@ Settings application for nemo mobile
 %setup -q -n %{name}-%{version}
 
 %build
-%qtc_qmake5
+%qtc_qmake5  VERSION=%{version}
 
 make %{?_smp_mflags}
 

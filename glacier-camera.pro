@@ -23,4 +23,5 @@ DISTFILES += \
     qml/components.qml \
     qml/glacier-camera.qml \
     qml/components/ClickIcon.qml \
-    qml/pages/CameraPage.qml
+    qml/pages/CameraPage.qml \
+    qml/pages/PreviewPage.qml

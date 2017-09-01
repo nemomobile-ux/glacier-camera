@@ -12,6 +12,7 @@ ApplicationWindow {
     id: root
 
     property int cameraId: 0
+    property string fileName: ""
 
     //contentOrientation: Screen.orientation
 

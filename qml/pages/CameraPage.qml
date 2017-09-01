@@ -11,9 +11,10 @@ import "../components"
 
 Page {
     id: cameraPage
+
     headerTools: HeaderToolsLayout {
         id: tools
-        title: "Camera"
+        title: qsTr("Camera")
     }
 
     Camera {
@@ -31,14 +32,15 @@ Page {
 
         imageCapture {
             onImageSaved: {
-                Qt.quit()
+                lastPhoto.source = fileName
             }
         }
 
         onLockStatusChanged: {
             if(lockStatus == Camera.Locked)
             {
-                camera.imageCapture.captureToLocation("/home/nemo/Pictures/camera_"+Qt.formatDateTime(new Date(),"yyMMdd_hhmmss")+".jpg")
+                fileName = "/home/nemo/Pictures/camera_"+Qt.formatDateTime(new Date(),"yyMMdd_hhmmss")+".jpg";
+                camera.imageCapture.captureToLocation(fileName)
             }
         }
     }
@@ -96,6 +98,29 @@ Page {
         anchors.centerIn: parent
 
         visible: false
+    }
+
+    Image{
+        id: lastPhoto
+        source: ""
+        width: getShot.width/3*2
+        height: width
+
+        anchors{
+            left: getShot.right
+            leftMargin: width
+            verticalCenter: getShot.verticalCenter
+        }
+
+        visible: fileName != ""
+        fillMode: Image.PreserveAspectCrop
+
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                pageStack.push(Qt.resolvedUrl("/usr/share/glacier-camera/qml/pages/PreviewPage.qml"));
+            }
+        }
     }
 
     ClickIcon{

@@ -20,4 +20,6 @@ INSTALLS += target desktop qml images
 
 DISTFILES += \
     rpm/glacier-camera.spec \
-    qml/components.qml
+    qml/components.qml \
+    qml/glacier-camera.qml \
+    qml/components/ClickIcon.qml

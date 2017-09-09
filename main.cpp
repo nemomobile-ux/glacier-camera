@@ -28,16 +28,12 @@
 #include <QScreen>
 #include <QCoreApplication>
 
-#include "src/camerasettings.h"
-
 int main(int argc, char *argv[])
 {
     setenv("QT_QUICK_CONTROLS_STYLE", "Nemo", 1);
 
     QGuiApplication app(argc, argv);
     app.setApplicationName("glacier-camera");
-
-    qmlRegisterType<CameraSettings>("org.glacier.settings",1,0,"Settings");
 
     QQmlApplicationEngine* engine = new QQmlApplicationEngine(QUrl("/usr/share/glacier-camera/qml/glacier-camera.qml"));
     QObject *topLevel = engine->rootObjects().value(0);

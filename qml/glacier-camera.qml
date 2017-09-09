@@ -6,7 +6,7 @@ import QtQuick.Controls.Styles.Nemo 1.0
 import QtQuick.Window 2.1
 import QtQuick.Layouts 1.0
 
-import org.glacier.settings 1.0
+import org.nemomobile.settings 1.0
 
 import "pages"
 

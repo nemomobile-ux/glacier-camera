@@ -3,8 +3,7 @@ TARGET = glacier-camera
 
 QT += qml quick
 
-SOURCES += main.cpp \
-    src/camerasettings.cpp
+SOURCES += main.cpp
 
 target.path = /usr/bin
 
@@ -28,5 +27,4 @@ DISTFILES += \
     qml/pages/PreviewPage.qml \
     qml/pages/SettingsPage.qml
 
-HEADERS += \
-    src/camerasettings.h
+HEADERS +=

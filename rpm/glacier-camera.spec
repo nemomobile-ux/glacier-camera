@@ -12,6 +12,8 @@ License:    LGPL
 URL:        https://github.com/nemomobile-ux/glacier-camera
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   qt5-qtquickcontrols-nemo
+Requires:   nemo-qml-plugin-settings
+
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)

@@ -5,7 +5,7 @@
 
 Name:       glacier-camera
 Summary:    Glacier Camera
-Version:    0.1
+Version:    0.1.1
 Release:    1
 Group:      Qt/Qt
 License:    LGPL
@@ -13,6 +13,7 @@ URL:        https://github.com/nemomobile-ux/glacier-camera
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   qt5-qtquickcontrols-nemo
 Requires:   nemo-qml-plugin-settings
+Requires:   mapplauncherd-booster-nemomobile
 
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)

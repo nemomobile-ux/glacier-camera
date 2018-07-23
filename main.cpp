@@ -21,27 +21,23 @@
 #endif
 #include <QtGui/QGuiApplication>
 
-
 #include <QtQml>
 #include <QtQuick/QQuickView>
 #include <QtCore/QString>
 #include <QScreen>
 #include <QCoreApplication>
 
+#include <glacierapp.h>
+
 Q_DECL_EXPORT  int main(int argc, char *argv[])
 {
-    setenv("QT_QUICK_CONTROLS_STYLE", "Nemo", 1);
+    QGuiApplication *app = GlacierApp::app(argc, argv);
+    app->setOrganizationName("NemoMobile");
 
-    QGuiApplication app(argc, argv);
-    app.setApplicationName("glacier-camera");
-
-    QQmlApplicationEngine* engine = new QQmlApplicationEngine(QUrl("/usr/share/glacier-camera/qml/glacier-camera.qml"));
-    QObject *topLevel = engine->rootObjects().value(0);
-    QQuickWindow *window = qobject_cast<QQuickWindow *>(topLevel);
-
-    engine->rootContext()->setContextProperty("__window", window);
+    QQuickWindow *window = GlacierApp::showWindow();
 
     window->setTitle(QObject::tr("Camera"));
     window->showFullScreen();
-    return app.exec();
+
+    return app->exec();
 }

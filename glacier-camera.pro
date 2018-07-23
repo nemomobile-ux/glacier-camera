@@ -3,6 +3,10 @@ TARGET = glacier-camera
 
 QT += qml quick
 
+CONFIG += link_pkgconfig
+PKGCONFIG += glacierapp
+LIBS += -lglacierapp
+
 SOURCES += main.cpp
 
 target.path = /usr/bin

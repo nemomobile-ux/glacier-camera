@@ -13,11 +13,13 @@ URL:        https://github.com/nemomobile-ux/glacier-camera
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   qt5-qtquickcontrols-nemo
 Requires:   nemo-qml-plugin-settings
+Requires:   libglacierapp
 Requires:   mapplauncherd-booster-nemomobile
 
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
+BuildRequires:  pkgconfig(glacierapp)
 BuildRequires:  desktop-file-utils
 
 %description

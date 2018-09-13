@@ -20,7 +20,12 @@ images.path = /usr/share/glacier-camera/images/
 desktop.files = glacier-camera.desktop
 desktop.path = /usr/share/applications
 
-INSTALLS += target desktop qml images
+TRANSLATIONS += translations/glacier-camera_ru.ts
+
+i18n_files.files = translations/*
+i18n_files.path = /usr/share/$$TARGET/translations
+
+INSTALLS += target desktop qml images i18n_files
 
 DISTFILES += \
     rpm/glacier-camera.spec \
@@ -29,6 +34,5 @@ DISTFILES += \
     qml/components/ClickIcon.qml \
     qml/pages/CameraPage.qml \
     qml/pages/PreviewPage.qml \
-    qml/pages/SettingsPage.qml
-
-HEADERS +=
+    qml/pages/SettingsPage.qml \
+    translations/*

@@ -22,6 +22,8 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(glacierapp)
 BuildRequires:  desktop-file-utils
 
+BuildRequires:  qt5-qttools
+
 %description
 Settings application for nemo mobile
 
@@ -40,6 +42,9 @@ rm -rf %{buildroot}
 desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
    %{buildroot}%{_datadir}/applications/*.desktop
+
+lrelease %{buildroot}%{_datadir}/%{name}/translations/*.ts
+rm -rf %{buildroot}%{_datadir}/%{name}/translations/*.ts
 
 %files
 %defattr(-,root,root,-)

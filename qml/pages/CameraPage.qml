@@ -1,11 +1,11 @@
 import QtQuick 2.6
 import QtMultimedia 5.5
+import QtSensors 5.1
 
 import QtQuick.Controls 1.0
 import QtQuick.Controls.Nemo 1.0
 import QtQuick.Controls.Styles.Nemo 1.0
-import QtQuick.Window 2.1
-import QtQuick.Layouts 1.0
+
 
 import "../components"
 
@@ -25,11 +25,17 @@ Page {
         ]
     }
 
+
+    function writeMetaData() {
+        captureView.captureOrientation = orientationSensor.rotationAngle
+        camera.metaData.date = new Date()
+    }
+
     Camera {
         id: camera
         deviceId: QtMultimedia.availableCameras[cameraId].deviceId;
 
-        captureMode: Camera.CaptureViewfinder
+        captureMode: Camera.CaptureStillImage
 
         imageProcessing.whiteBalanceMode: CameraImageProcessing.WhiteBalanceFlash
 
@@ -46,15 +52,18 @@ Page {
 
         onLockStatusChanged: {
             if(lockStatus == Camera.Locked) {
-                fileName = "/home/nemo/Pictures/camera_"+Qt.formatDateTime(new Date(),"yyMMdd_hhmmss")+".jpg";
+                fileName = imageDir+"/camera_"+Qt.formatDateTime(new Date(),"yyMMdd_hhmmss")+".jpg";
+                console.log(fileName)
                 camera.imageCapture.captureToLocation(fileName)
             }
         }
 
         focus {
-            focusMode: Camera.FocusAuto
-            focusPointMode: Camera.FocusPointCustom
+            focusMode: Camera.FocusContinuous
+            //focusPointMode: Camera.FocusPointCustom
         }
+
+        flash.mode: Camera.FlashAuto
 
         Component.onCompleted: {
             if(root.iso === "auto") {
@@ -62,6 +71,10 @@ Page {
             } else {
                 exposure.manualIso = root.iso;
             }
+        }
+
+        metaData {
+            orientation: orientationSensor.rotationAngle
         }
     }
 
@@ -110,10 +123,11 @@ Page {
         }
 
         MouseArea {
+            id: focusArea
             anchors.fill: parent
             onClicked: {
-                var point_x = mouse.x / Screen.width
-                var point_y = mouse.y / Screen.height
+                var point_x = mouse.x / root.width
+                var point_y = mouse.y / root.height
                 camera.focus.customFocusPoint = Qt.point(point_x, point_y)
                 focusPoint.x = mouse.x-focusPoint.radius
                 focusPoint.y = mouse.y-focusPoint.radius
@@ -160,7 +174,7 @@ Page {
 
         width: getShot.width/3*2
         height: width
-        source: "/usr/share/glacier-camera/images/refresh.svg"
+        source: "image://theme/refresh"
         anchors{
             right: getShot.left
             rightMargin: width
@@ -184,7 +198,7 @@ Page {
         id: getShot
         width: cameraPage.height/10
         height: width
-        source: "/usr/share/glacier-camera/images/camera.svg"
+        source: "image://theme/camera"
         anchors {
             bottom: parent.bottom
             bottomMargin: width/2
@@ -192,6 +206,7 @@ Page {
         }
         onClicked: {
             camera.searchAndLock();
+            console.log("Shot")
         }
     }
 
@@ -226,4 +241,23 @@ Page {
             value: false
         }
     }
+
+    OrientationSensor {
+        id: orientationSensor
+        active: true
+        property int rotationAngle: reading.orientation ? getOrientation(reading.orientation) : 0
+        function getOrientation(value) {
+            switch (value) {
+            case 1:
+                return 0
+            case 2:
+                return 180
+            case 3:
+                return 270
+            default:
+                return 90
+            }
+        }
+    }
+
 }

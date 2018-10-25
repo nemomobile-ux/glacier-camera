@@ -16,7 +16,7 @@ ApplicationWindow {
     property int cameraId: 0
     property string fileName: ""
 
-    property var iso;
+    property var iso: "auto";
 
     Settings{
         id: settings;

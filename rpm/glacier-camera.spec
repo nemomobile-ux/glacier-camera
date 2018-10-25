@@ -22,7 +22,7 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(glacierapp)
 BuildRequires:  desktop-file-utils
 
-BuildRequires:  qt5-qttools
+BuildRequires:  qt5-qttools-linguist
 
 %description
 Settings application for nemo mobile

@@ -21,8 +21,13 @@ BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(glacierapp)
 BuildRequires:  desktop-file-utils
-
+%if 0%{?fedora}
+%define lrelease lrelease-qt5
+BuildRequires:  qt5-linguist
+%else
+%define lrelease lrelease
 BuildRequires:  qt5-qttools-linguist
+%endif
 
 %description
 Settings application for nemo mobile
@@ -43,7 +48,7 @@ desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
    %{buildroot}%{_datadir}/applications/*.desktop
 
-lrelease %{buildroot}%{_datadir}/%{name}/translations/*.ts
+%lrelease %{buildroot}%{_datadir}/%{name}/translations/*.ts
 rm -rf %{buildroot}%{_datadir}/%{name}/translations/*.ts
 
 %files

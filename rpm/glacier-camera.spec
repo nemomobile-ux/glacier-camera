@@ -6,7 +6,7 @@
 Name:       glacier-camera
 Summary:    Glacier Camera
 Version:    0.1.1
-Release:    1
+Release:    2
 Group:      Qt/Qt
 License:    LGPL
 URL:        https://github.com/nemomobile-ux/glacier-camera
@@ -16,6 +16,7 @@ Requires:   nemo-qml-plugin-settings
 Requires:   libglacierapp
 Requires:   mapplauncherd-booster-nemomobile
 
+BuildRequires:  cmake
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
@@ -36,20 +37,19 @@ Settings application for nemo mobile
 %setup -q -n %{name}-%{version}
 
 %build
-%qtc_qmake5  VERSION=%{version}
-
-make %{?_smp_mflags}
+mkdir build
+cd build
+cmake \
+	-DCMAKE_BUILD_TYPE=None \
+	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
+	-DCMAKE_VERBOSE_MAKEFILE=ON \
+	..
+cmake --build .
 
 %install
+cd build
 rm -rf %{buildroot}
-%qmake5_install
-
-desktop-file-install --delete-original       \
-  --dir %{buildroot}%{_datadir}/applications             \
-   %{buildroot}%{_datadir}/applications/*.desktop
-
-%lrelease %{buildroot}%{_datadir}/%{name}/translations/*.ts
-rm -rf %{buildroot}%{_datadir}/%{name}/translations/*.ts
+DESTDIR=%{buildroot} cmake --build . --target install
 
 %files
 %defattr(-,root,root,-)

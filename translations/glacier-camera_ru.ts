@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
 <context>
     <name>CameraPage</name>
     <message>
@@ -35,7 +33,7 @@
     <message>
         <location filename="../src/qml/pages/SettingsPage.qml" line="42"/>
         <source>ISO</source>
-        <translation type="unfinished"></translation>
+        <translation>ИСО</translation>
     </message>
 </context>
 </TS>

@@ -1,7 +1,8 @@
 [Desktop Entry]
 Type=Application
 Name=Camera
-Exec=invoker --type=nemomobile -s glacier-camera
+Exec=/usr/bin/glacier-camera
 Icon=icon-launcher-camera
 X-Desktop-File-Install-Version=0.20
+Name[ru]=Камера
 Name[cs]=Fotoaparát

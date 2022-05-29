@@ -2,7 +2,7 @@
 Type=Application
 Name=Camera
 Exec=/usr/bin/glacier-camera
-Icon=icon-launcher-camera
+Icon=/usr/share/glacier-camera/images/glacier-camera.png
 X-Desktop-File-Install-Version=0.20
 Name[ru]=Камера
 Name[cs]=Fotoaparát

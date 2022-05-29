@@ -1,6 +1,8 @@
 set(SRC main.cpp)
 
-add_executable(glacier-camera ${SRC})
+qtquick_compiler_add_resources(RESOURCES qml/glacier-camera.qrc)
+
+add_executable(glacier-camera ${SRC} ${RESOURCES} )
 
 target_link_libraries(glacier-camera
 	Qt5::Gui

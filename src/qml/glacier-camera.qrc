@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>components/ClickIcon.qml</file>
+        <file>pages/CameraPage.qml</file>
+        <file>pages/PreviewPage.qml</file>
+        <file>pages/SettingsPage.qml</file>
+        <file>glacier-camera.qml</file>
+    </qresource>
+</RCC>

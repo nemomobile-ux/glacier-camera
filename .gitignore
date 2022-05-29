@@ -6,11 +6,13 @@
 *.qmlc
 moc_*
 qrc_*
+*.user*
 .qmake.stash
 *.spec.*
 documentation.list
 examples/touch/glacier-components
 Makefile
 installroot/
+build/
 RPMS/
 debug*.list

@@ -6,6 +6,7 @@
 *.qmlc
 moc_*
 qrc_*
+*.user*
 .qmake.stash
 *.spec.*
 documentation.list

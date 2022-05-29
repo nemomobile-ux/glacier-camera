@@ -23,8 +23,6 @@ Page {
             topMargin: 40
         }
 
-
-
         ListModel{
             id: isoModel
             ListElement { name: "Auto"}
@@ -44,8 +42,8 @@ Page {
                 Text {
                     height: isoRoller.itemHeight
                     text: name
-                    color: "white"
-                    font.pixelSize: 32
+                    color: Theme.textColor
+                    font.pixelSize: Theme.fontSizeMedium
                     font.bold: (isoRoller.activated && isoRoller.currentIndex === index)
                 }
             }
@@ -63,7 +61,7 @@ Page {
 
     function getIndexByName(model,name){
         for(var i = 0; i < model.count; i++) {
-            if(model.get(i).name == name) {
+            if(model.get(i).name === name) {
                 return i;
             }
         }

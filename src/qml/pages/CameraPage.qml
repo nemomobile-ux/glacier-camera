@@ -17,9 +17,9 @@ Page {
         title: qsTr("Camera")
         tools: [
             ToolButton {
-                iconSource: "/usr/share/glacier-camera/images/gear.svg"
+                iconSource: "image://theme/gear";
                 onClicked: {
-                    pageStack.push(Qt.resolvedUrl("/usr/share/glacier-camera/qml/pages/SettingsPage.qml"));
+                    pageStack.push(Qt.resolvedUrl("qrc:///pages/SettingsPage.qml"));
                 }
             }
         ]
@@ -80,7 +80,7 @@ Page {
 
     Rectangle{
         anchors.fill: parent
-        color: "black";
+        color: Theme.backgroundColor
 
         VideoOutput {
             id: viewFinder
@@ -158,13 +158,13 @@ Page {
             verticalCenter: getShot.verticalCenter
         }
 
-        visible: fileName != ""
+        visible: fileName !== ""
         fillMode: Image.PreserveAspectCrop
 
         MouseArea{
             anchors.fill: parent
             onClicked: {
-                pageStack.push(Qt.resolvedUrl("/usr/share/glacier-camera/qml/pages/PreviewPage.qml"));
+                pageStack.push(Qt.resolvedUrl("qrc:///pages/PreviewPage.qml"));
             }
         }
     }
@@ -185,7 +185,7 @@ Page {
 
         onClicked: {
             camera.stop();
-            if(cameraId+1 == QtMultimedia.availableCameras.length) {
+            if(cameraId+1 >= QtMultimedia.availableCameras.length) {
                 cameraId = 0;
             } else {
                 cameraId++;
@@ -217,7 +217,7 @@ Page {
 
         radius: width/2
 
-        color: "#0091e5"
+        color: Theme.accentColor
         visible: false
 
         onVisibleChanged: {

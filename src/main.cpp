@@ -41,6 +41,7 @@ Q_DECL_EXPORT  int main(int argc, char *argv[])
     QQuickWindow *window = GlacierApp::showWindow();
 
     window->setTitle(QObject::tr("Camera"));
+    window->setIcon(QIcon("/usr/share/glacier-camera/images/glacier-camera.png"));
 
     return app->exec();
 }

@@ -13,5 +13,6 @@ documentation.list
 examples/touch/glacier-components
 Makefile
 installroot/
+build/
 RPMS/
 debug*.list

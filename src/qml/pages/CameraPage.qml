@@ -139,8 +139,8 @@ Page {
     Label{
         id: zoomLabel
         text: "X "+pincharea.zoomValue.toFixed(1)
-        color: "white"
-        font.pixelSize: 75
+        color: Theme.textColor
+        font.pixelSize: Theme.fontSizeExtraLarge
         anchors.centerIn: parent
 
         visible: false

@@ -45,36 +45,40 @@ Page {
         }
 
         imageCapture {
-            onImageSaved: {
-                lastPhoto.source = fileName
+            onImageCaptured: {
+                console.log("image captured " + fileName + " + preview: " + preview)
+                lastPhoto.source = preview
             }
         }
 
         onLockStatusChanged: {
             if(lockStatus == Camera.Locked) {
                 fileName = imageDir+"/camera_"+Qt.formatDateTime(new Date(),"yyMMdd_hhmmss")+".jpg";
-                console.log(fileName)
                 camera.imageCapture.captureToLocation(fileName)
             }
+            console.log("lockStatusChanged: " + lockStatus)
         }
 
         focus {
             focusMode: Camera.FocusContinuous
-            //focusPointMode: Camera.FocusPointCustom
+            focusPointMode: Camera.FocusPointCustom
         }
 
         flash.mode: Camera.FlashAuto
 
         Component.onCompleted: {
-            if(root.iso === "auto") {
+            if(iso === "auto") {
                 exposure.setAutoIsoSensitivity()
             } else {
-                exposure.manualIso = root.iso;
+                exposure.manualIso = iso;
             }
         }
 
         metaData {
             orientation: orientationSensor.rotationAngle
+        }
+        onErrorChanged: {
+            console.error("Camera error: "  + camera.errorCode + " " + camera.errorString)
         }
     }
 
@@ -148,7 +152,7 @@ Page {
 
     Image{
         id: lastPhoto
-        source: settings.value("lastFile","")
+        source: "file://" + fileName
         width: getShot.width/3*2
         height: width
 
@@ -159,6 +163,7 @@ Page {
         }
 
         visible: fileName !== ""
+
         fillMode: Image.PreserveAspectCrop
 
         MouseArea{
@@ -205,8 +210,27 @@ Page {
             horizontalCenter: parent.horizontalCenter
         }
         onClicked: {
-            camera.searchAndLock();
-            console.log("Shot")
+//            console.log("supported focus modes: " + focus.supportedFocusModes
+//                                          + ", FocusManual: " + CameraFocus.FocusManual
+//                                          + ", FocusHyperfocal: " + CameraFocus.FocusHyperfocal
+//                                          + ", FocusInfinity: " + CameraFocus.FocusInfinity
+//                                          + ", FocusAuto: " + CameraFocus.FocusAuto
+//                                          + ", FocusContinuous: " + CameraFocus.FocusContinuous
+//                                          + ", FocusMacro: " + CameraFocus.FocusMacro
+//                                          )
+
+            if (focus.supportedFocusModes === undefined) {
+                console.warn("no focus mode available. Taking picture without focusing")
+                fileName = imageDir+"/camera_"+Qt.formatDateTime(new Date(),"yyMMdd_hhmmss")+".jpg";
+                camera.imageCapture.captureToLocation(fileName)
+                return;
+            }
+
+            if (camera.lockStatus === Camera.Unlocked) {
+                camera.searchAndLock();
+            } else {
+                camera.unlock();
+            }
         }
     }
 
@@ -245,7 +269,8 @@ Page {
     OrientationSensor {
         id: orientationSensor
         active: true
-        property int rotationAngle: reading.orientation ? getOrientation(reading.orientation) : 0
+
+        property int rotationAngle: reading && reading.orientation ? getOrientation(reading.orientation) : 0
         function getOrientation(value) {
             switch (value) {
             case 1:

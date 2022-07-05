@@ -23,7 +23,7 @@ Page {
         Image{
             width: parent.width
             height: parent.height
-            source: fileName
+            source: "file://" + fileName
             fillMode: Image.PreserveAspectCrop
         }
     }

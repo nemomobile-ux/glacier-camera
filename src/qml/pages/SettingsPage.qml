@@ -49,7 +49,7 @@ Page {
             }
             onCurrentIndexChanged:{
                 settings.setValue("iso",isoModel.get(isoRoller.currentIndex).name);
-                root.iso = isoModel.get(isoRoller.currentIndex).name
+                iso = isoModel.get(isoRoller.currentIndex).name
             }
         }
     }

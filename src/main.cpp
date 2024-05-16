@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2017-2024 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -16,16 +16,15 @@
  * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  */
+
 #ifdef QT_QML_DEBUG
 #include <QtQuick>
 #endif
 #include <QtGui/QGuiApplication>
 
 #include <QCoreApplication>
-#include <QScreen>
-#include <QtCore/QString>
 #include <QtQml>
-#include <QtQuick/QQuickView>
+#include <QQuickView>
 
 #include <glacierapp.h>
 

@@ -1,11 +1,30 @@
-import QtQuick 2.6
-import QtMultimedia 5.5
-import QtSensors 5.1
+/*
+ * Copyright (C) 2021-2024 Chupligin Sergey <neochapay@gmail.com>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public License
+ * along with this library; see the file COPYING.LIB.  If not, write to
+ * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
-import QtQuick.Controls 1.0
-import QtQuick.Controls.Nemo 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick
+import QtQuick.Controls
 
+import Nemo
+import Nemo.Controls
+
+import QtMultimedia
+import QtSensors
 
 import "../components"
 
@@ -33,38 +52,25 @@ Page {
 
     Camera {
         id: camera
-        deviceId: QtMultimedia.availableCameras[cameraId].deviceId;
+        cameraDevice: QtMultimedia.availableCameras[cameraId].deviceId;
 
-        captureMode: Camera.CaptureStillImage
+        //captureMode: Camera.CaptureStillImage
 
-        imageProcessing.whiteBalanceMode: CameraImageProcessing.WhiteBalanceFlash
+        whiteBalanceMode: Camera.WhiteBalanceAuto
 
-        exposure {
-            exposureCompensation: -1.0
-            exposureMode: Camera.ExposurePortrait
-        }
+        exposureCompensation: -1.0
+        exposureMode: Camera.ExposurePortrait
 
-        imageCapture {
-            onImageCaptured: {
-                console.log("image captured " + fileName + " + preview: " + preview)
-                lastPhoto.source = preview
-            }
-        }
-
-        onLockStatusChanged: {
+        /*onLockStatusChanged: {
             if(lockStatus == Camera.Locked) {
                 fileName = imageDir+"/camera_"+Qt.formatDateTime(new Date(),"yyMMdd_hhmmss")+".jpg";
                 camera.imageCapture.captureToLocation(fileName)
             }
             console.log("lockStatusChanged: " + lockStatus)
-        }
+        }*/
 
-        focus {
-            focusMode: Camera.FocusContinuous
-            focusPointMode: Camera.FocusPointCustom
-        }
-
-        flash.mode: Camera.FlashAuto
+        focusMode: Camera.FocusContinuous
+        flashMode: Camera.FlashAuto
 
         Component.onCompleted: {
             if(iso === "auto") {
@@ -74,9 +80,6 @@ Page {
             }
         }
 
-        metaData {
-            orientation: orientationSensor.rotationAngle
-        }
         onErrorChanged: {
             console.error("Camera error: "  + camera.errorCode + " " + camera.errorString)
         }
@@ -88,7 +91,7 @@ Page {
 
         VideoOutput {
             id: viewFinder
-            source: camera
+            //source: camera
             width: parent.width
             height: parent.height
             fillMode: VideoOutput.PreserveAspectFit

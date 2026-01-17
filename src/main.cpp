@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017-2024 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2017-2026 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -27,6 +27,7 @@
 #include <QQuickView>
 
 #include <glacierapp.h>
+#include "fileutils.h"
 
 Q_DECL_EXPORT int main(int argc, char* argv[])
 {
@@ -36,6 +37,8 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
     QString imageDir = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
     QQmlApplicationEngine* engine = GlacierApp::engine(app);
     engine->rootContext()->setContextProperty("imageDir", imageDir);
+
+    qmlRegisterType<FileUtils>("org.glacier.camera", 1, 0, "FileUtils");
 
     QQuickWindow* window = GlacierApp::showWindow();
 

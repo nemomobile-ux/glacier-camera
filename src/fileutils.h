@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2026 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2026 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -17,30 +17,16 @@
  * Boston, MA 02110-1301, USA.
  */
 
-import QtQuick
-import QtQuick.Controls
+#ifndef FILEUTILS_H
+#define FILEUTILS_H
 
-import Nemo
-import Nemo.Controls
+#include <QObject>
 
-Page {
-    id: previewPage
+class FileUtils : public QObject {
+    Q_OBJECT
+public:
+    explicit FileUtils(QObject* parent = nullptr);
+    Q_INVOKABLE bool fileExists(QString fileName);
+};
 
-    headerTools: HeaderToolsLayout {
-        id: tools
-        title: qsTr("Preview")
-        showBackButton: true;
-    }
-
-    Item{
-        width: parent.width
-        height: parent.height
-
-        Image{
-            width: parent.width
-            height: parent.height
-            source: "file://" + lastImage
-            fillMode: Image.PreserveAspectCrop
-        }
-    }
-}
+#endif // FILEUTILS_H

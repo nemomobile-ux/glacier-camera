@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2024 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021-2026 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -44,66 +44,30 @@ Page {
         ]
     }
 
-
-    function writeMetaData() {
-        captureView.captureOrientation = orientationSensor.rotationAngle
-        camera.metaData.date = new Date()
+    CaptureSession{
+        id: captureSession
+        camera: Camera {
+            id: camera
+        }
+        imageCapture:  ImageCapture {
+            id: imageCapture
+            onImageSaved: lastImage = fileName
+        }
+        recorder: MediaRecorder {
+            id: recorder
+        }
+        videoOutput: viewfinder
     }
 
-    Camera {
-        id: camera
-        cameraDevice: QtMultimedia.availableCameras[cameraId].deviceId;
-
-        //captureMode: Camera.CaptureStillImage
-
-        whiteBalanceMode: Camera.WhiteBalanceAuto
-
-        exposureCompensation: -1.0
-        exposureMode: Camera.ExposurePortrait
-
-        /*onLockStatusChanged: {
-            if(lockStatus == Camera.Locked) {
-                fileName = imageDir+"/camera_"+Qt.formatDateTime(new Date(),"yyMMdd_hhmmss")+".jpg";
-                camera.imageCapture.captureToLocation(fileName)
-            }
-            console.log("lockStatusChanged: " + lockStatus)
-        }*/
-
-        focusMode: Camera.FocusContinuous
-        flashMode: Camera.FlashAuto
-
-        Component.onCompleted: {
-            if(iso === "auto") {
-                exposure.setAutoIsoSensitivity()
-            } else {
-                exposure.manualIso = iso;
-            }
-        }
-
-        onErrorChanged: {
-            console.error("Camera error: "  + camera.errorCode + " " + camera.errorString)
-        }
-    }
-
-    Rectangle{
+    VideoOutput {
+        id: viewfinder
         anchors.fill: parent
-        color: Theme.backgroundColor
-
-        VideoOutput {
-            id: viewFinder
-            //source: camera
-            width: parent.width
-            height: parent.height
-            fillMode: VideoOutput.PreserveAspectFit
-            clip: true
-            focus : visible // to receive focus and capture key events when visible
-        }
     }
 
     PinchArea{
         id: pincharea
         anchors.fill: parent
-        pinch.target: viewFinder
+        pinch.target: viewfinder
 
         pinch.minimumScale: 1
         pinch.maximumScale: 4.0
@@ -155,7 +119,7 @@ Page {
 
     Image{
         id: lastPhoto
-        source: "file://" + fileName
+        source: "file://" + lastImage
         width: getShot.width/3*2
         height: width
 
@@ -165,7 +129,7 @@ Page {
             verticalCenter: getShot.verticalCenter
         }
 
-        visible: fileName !== ""
+        visible: lastImage !== ""
 
         fillMode: Image.PreserveAspectCrop
 
@@ -189,11 +153,11 @@ Page {
             verticalCenter: getShot.verticalCenter
         }
 
-        visible: QtMultimedia.availableCameras.length > 1;
+        visible: MediaDevices.videoInputs.length > 1;
 
         onClicked: {
             camera.stop();
-            if(cameraId+1 >= QtMultimedia.availableCameras.length) {
+            if(cameraId+1 >= MediaDevices.videoInputs.length) {
                 cameraId = 0;
             } else {
                 cameraId++;
@@ -204,6 +168,9 @@ Page {
 
     ClickIcon{
         id: getShot
+
+        property string imageName: ""
+
         width: cameraPage.height/10
         height: width
         source: "image://theme/camera"
@@ -213,27 +180,8 @@ Page {
             horizontalCenter: parent.horizontalCenter
         }
         onClicked: {
-//            console.log("supported focus modes: " + focus.supportedFocusModes
-//                                          + ", FocusManual: " + CameraFocus.FocusManual
-//                                          + ", FocusHyperfocal: " + CameraFocus.FocusHyperfocal
-//                                          + ", FocusInfinity: " + CameraFocus.FocusInfinity
-//                                          + ", FocusAuto: " + CameraFocus.FocusAuto
-//                                          + ", FocusContinuous: " + CameraFocus.FocusContinuous
-//                                          + ", FocusMacro: " + CameraFocus.FocusMacro
-//                                          )
-
-            if (focus.supportedFocusModes === undefined) {
-                console.warn("no focus mode available. Taking picture without focusing")
-                fileName = imageDir+"/camera_"+Qt.formatDateTime(new Date(),"yyMMdd_hhmmss")+".jpg";
-                camera.imageCapture.captureToLocation(fileName)
-                return;
-            }
-
-            if (camera.lockStatus === Camera.Unlocked) {
-                camera.searchAndLock();
-            } else {
-                camera.unlock();
-            }
+            imageName = imageDir+"/camera_"+Qt.formatDateTime(new Date(),"yyMMdd_hhmmss")+".jpg";
+            captureSession.imageCapture.captureToFile(imageName)
         }
     }
 
@@ -288,4 +236,7 @@ Page {
         }
     }
 
+    Component.onCompleted: {
+        camera.start()
+    }
 }

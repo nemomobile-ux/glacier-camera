@@ -1,14 +1,18 @@
-set(SRC main.cpp)
+set(SRC main.cpp
+    fileutils.cpp)
+
+set(HEADERS
+    fileutils.h)
 
 qt_add_resources(RESOURCES qml/glacier-camera.qrc)
 
-add_executable(glacier-camera ${SRC} ${RESOURCES} )
+add_executable(glacier-camera ${SRC} ${HEADERS} ${RESOURCES})
 
 target_link_libraries(glacier-camera
         Qt6::Gui
         Qt6::Qml
         Qt6::Quick
-	Glacier::App)
+        PkgConfig::GLACIER)
 
 install(TARGETS glacier-camera RUNTIME
 	DESTINATION ${CMAKE_INSTALL_BINDIR})

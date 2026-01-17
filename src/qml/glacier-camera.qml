@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2024 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021-2026 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -24,6 +24,7 @@ import Nemo
 import Nemo.Controls
 
 import org.nemomobile.settings 1.0
+import org.glacier.camera 1.0
 
 import "pages"
 
@@ -31,12 +32,16 @@ ApplicationWindow {
     id: root
 
     property int cameraId: 0
-    property string fileName: ""
+    property string lastImage: ""
 
     property string iso: "auto";
 
     Settings{
         id: settings;
+    }
+
+    FileUtils{
+        id: fileUtils
     }
 
     Keys.onReleased: {
@@ -50,8 +55,8 @@ ApplicationWindow {
 
     initialPage: CameraPage{}
 
-    onFileNameChanged: {
-        settings.setValue("lastFile",fileName);
+    onLastImageChanged: {
+        settings.setValue("lastFile",lastImage);
     }
 
     onCameraIdChanged: {
@@ -60,7 +65,11 @@ ApplicationWindow {
 
     Component.onCompleted: {
         cameraId = settings.value("cameraId",0)
-        fileName = settings.value("lastFile","")
+        lastImage = settings.value("lastFile","")
+        if(!fileUtils.fileExists(lastImage)) {
+            lastImage = "";
+        }
+
         iso = settings.value("iso","auto");
     }
 }

@@ -12,9 +12,13 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(FeatureSummary)
 include(GNUInstallDirs)
 
+set(CMAKE_INSTALL_PREFIX /usr)
+
 set(QT_MIN_VERSION "6.0.0")
-find_package(Qt6 COMPONENTS Gui Qml Quick LinguistTools REQUIRED)
-find_package(Glacier 0.9 COMPONENTS App REQUIRED)
+find_package(Qt6 COMPONENTS Gui Qml Quick Multimedia LinguistTools REQUIRED)
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GLACIER glacierapp IMPORTED_TARGET)
 
 add_subdirectory(src)
 

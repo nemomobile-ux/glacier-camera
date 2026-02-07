@@ -23,11 +23,11 @@
 #include <QtGui/QGuiApplication>
 
 #include <QCoreApplication>
-#include <QtQml>
 #include <QQuickView>
+#include <QtQml>
 
-#include <glacierapp.h>
 #include "fileutils.h"
+#include <glacierapp.h>
 
 Q_DECL_EXPORT int main(int argc, char* argv[])
 {

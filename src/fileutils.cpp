@@ -27,7 +27,7 @@ FileUtils::FileUtils(QObject* parent)
 
 bool FileUtils::fileExists(QString fileName)
 {
-    if(fileName.startsWith("file://")) {
+    if (fileName.startsWith("file://")) {
         fileName = fileName.remove("file://");
     }
 
